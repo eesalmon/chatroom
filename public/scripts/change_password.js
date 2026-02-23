@@ -5,7 +5,7 @@ async function loadUserInfo() {
             const user = await response.json();
             document.getElementById('user-display').innerHTML = `Hi, ${user.username} (<a href="/api/logout">logout</a>) `;
         } else {
-             window.location.href = '/auth/login.html';
+             window.location.href = '/auth/login';
         }
     } catch (e) {
         console.error(e);
@@ -64,7 +64,7 @@ form.addEventListener('submit', async function(e) {
             msgBox.style.display = 'block';
             msgBox.classList.add('success');
             setTimeout(() => {
-                window.location.href = '/user/settings.html';
+                window.location.href = '/user/settings';
             }, 5000);
         } else {
             msgBox.innerText = data.message;

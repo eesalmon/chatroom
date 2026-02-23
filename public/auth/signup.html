@@ -69,7 +69,7 @@
                 <br>
             </div>
             <div class="authbox">
-                <span class="text">Already have an account? Go to <a href="/auth/login.html">login</a>.</span>
+                <span class="text">Already have an account? Go to <a href="/auth/login">login</a>.</span>
             </div>
           </div>
           <br>
@@ -136,7 +136,7 @@
                   sessionStorage.setItem('signup_username', formData.get('username'));
                   sessionStorage.setItem('signup_password', password);
                   // 跳转第二步
-                  window.location.href = '/auth/signup_verify.html';
+                  window.location.href = '/auth/signup_verify';
               } else {
                   msgBox.innerText = data.message;
                   msgBox.style.display = 'block';

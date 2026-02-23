@@ -10,7 +10,7 @@ async function loadUserInfo() {
             const user = await response.json();
             document.getElementById('user-display').innerHTML = `Hi, ${user.username} (<a href="/api/logout">logout</a>) `;
         } else {
-             window.location.href = '/auth/login.html';
+             window.location.href = '/auth/login';
         }
     } catch (e) {
         console.error(e);
@@ -24,7 +24,7 @@ async function loadSessions() {
     try {
         const response = await fetch('/api/sessions');
         if (response.status === 401) {
-            window.location.href = '/auth/login.html';
+            window.location.href = '/auth/login';
             return;
         }
         

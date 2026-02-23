@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
 import { Bindings, Variables } from './types'
 import { get404Html } from './templates/pages'
 import auth from './routes/auth'
@@ -12,7 +11,7 @@ export { ChatRoom } from './do/chat-room'
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 // Global Middleware
-app.use('*', cors())
+// app.use('*', cors()) // CORS removed for security
 
 // Mount Routes
 app.route('/', auth)

@@ -64,7 +64,7 @@ export const getEmailVerifiedHtml = (email: string) => `
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5;url=/user/settings.html" />
+    <meta http-equiv="refresh" content="5;url=/user/settings" />
     <title>email verified - coffeeroom</title>
     <meta name="theme-color" content="#d8e3ed" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#242931" media="(prefers-color-scheme: dark)">
@@ -212,7 +212,7 @@ export const getEmailVerifiedHtml = (email: string) => `
                 <div style="font-size: 14px; margin-bottom: 20px; font-family: 'unifont', sans-serif;">Your email <strong>${email}</strong> has been bound to your account.</div>
                 <div style="font-size: 12px; color: var(--note-color); font-family: 'unifont', sans-serif;">Redirecting to settings in 5 seconds...</div>
                 <br>
-                <div style="font-size: 14px;"><a href="/user/settings.html">Click here if not redirected</a></div>
+                <div style="font-size: 14px;"><a href="/user/settings">Click here if not redirected</a></div>
             </div>
         </div>
     <script src="/scripts/theme.js"></script>
@@ -226,7 +226,7 @@ export const getRegistrationSuccessHtml = (username: string) => `
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5;url=/auth/login.html" />
+    <meta http-equiv="refresh" content="5;url=/auth/login" />
     <title>email verified - coffeeroom</title>
     <meta name="theme-color" content="#d8e3ed" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#242931" media="(prefers-color-scheme: dark)">
@@ -374,7 +374,7 @@ export const getRegistrationSuccessHtml = (username: string) => `
                 <div style="font-size: 14px; margin-bottom: 20px; font-family: 'unifont', sans-serif;">Your account <strong>${username}</strong> has been created.</div>
                 <div style="font-size: 12px; color: var(--note-color); font-family: 'unifont', sans-serif;">Redirecting to login in 5 seconds...</div>
                 <br>
-                <div style="font-size: 14px;"><a href="/auth/login.html">Click here if not redirected</a></div>
+                <div style="font-size: 14px;"><a href="/auth/login">Click here if not redirected</a></div>
             </div>
         </div>
     <script src="/scripts/theme.js"></script>
@@ -417,7 +417,7 @@ export const getResetExpiredHtml = () => `
                 <div class="container">
                     <div class="authbox">
                         <span class="text">This reset link is invalid or has expired.</span><br>
-                        <span class="text"><a href="/auth/forgot.html">Request a new one</a>.</span>
+                        <span class="text"><a href="/auth/forgot">Request a new one</a>.</span>
                     </div>
                 </div>
             </div>
@@ -530,7 +530,7 @@ export const getResetSuccessHtml = () => `
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="5;url=/auth/login.html" />
+        <meta http-equiv="refresh" content="5;url=/auth/login" />
         <title>success</title>
         <link rel="stylesheet" href="/css/auth.css">
         <script>
@@ -561,7 +561,7 @@ export const getResetSuccessHtml = () => `
                 <div class="container">
                     <div class="authbox">
                         <span class="text">Password reset successfully! Redirecting to login...</span><br>
-                        <span class="text">If you are not redirected, please click <a href="/auth/login.html">here</a>.</span>
+                        <span class="text">If you are not redirected, please click <a href="/auth/login">here</a>.</span>
                     </div>
                 </div>
             </div>

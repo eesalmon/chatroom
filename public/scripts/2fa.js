@@ -62,7 +62,7 @@ async function init2FA() {
     try {
         const res = await fetch('/api/user');
         if (!res.ok) {
-            window.location.href = '/auth/login.html';
+            window.location.href = '/auth/login';
             return;
         }
         const user = await res.json();

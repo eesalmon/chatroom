@@ -36,7 +36,7 @@ async function init() {
     try {
         const res = await fetch('/api/user');
         if (res.status === 401) {
-            window.location.href = '/auth/login.html';
+            window.location.href = '/auth/login';
             return;
         }
         if (res.ok) {
@@ -47,7 +47,7 @@ async function init() {
             // 更新页面上的用户名显示 (如果 index.html 里有对应元素)
             const userDisplay = document.getElementById('user-display');
             if (userDisplay) {
-                userDisplay.innerHTML = `Hi, <a href="/user/profile.html">${currentUser}</a> (<a href="/api/logout">logout</a>) `;
+                userDisplay.innerHTML = `Hi, <a href="/user/profile">${currentUser}</a> (<a href="/api/logout">logout</a>) `;
             }
         }
     } catch (e) {

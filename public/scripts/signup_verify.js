@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = sessionStorage.getItem('signup_password');
 
     if (!username || !password) {
-        window.location.href = '/auth/signup.html';
+        window.location.href = '/auth/signup';
         return;
     }
 

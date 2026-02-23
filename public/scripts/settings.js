@@ -29,7 +29,7 @@ async function loadUserInfo() {
                 twoFaMsg.style.display = 'block';
             }
         } else {
-             window.location.href = '/auth/login.html';
+             window.location.href = '/auth/login';
         }
     } catch (e) {
         console.error(e);

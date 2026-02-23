@@ -38,7 +38,7 @@ function formatDate(timestamp) {
     try {
         const res = await fetch('/api/user');
         if (res.status === 401) {
-            window.location.href = '/auth/login.html';
+            window.location.href = '/auth/login';
             return;
         }
         if (res.ok) {
