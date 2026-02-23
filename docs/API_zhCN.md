@@ -277,8 +277,8 @@ WebSocket: `/websocket/:room`
 鉴权: `Session Cookie`
 
 参数:
-- room: `string` (Path Param), e.g. `"general"`
-- limit: `string` (Query Param), e.g. `?limit=100` 或 `?limit=all`
+- room: `string` (路径参数), e.g. `"general"`
+- limit: `string` (查询参数), e.g. `?limit=100` 或 `?limit=all`
 
 响应:
 
@@ -358,3 +358,5 @@ WebSocket: `/websocket/:room`
 ```
 
 备注: WebSocket 连接成功之后, 服务端会立刻推送最近 50 条消息, 按从旧到新排列。
+
+<br>
