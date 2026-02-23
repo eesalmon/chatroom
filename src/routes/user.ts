@@ -244,7 +244,7 @@ user.delete('/api/sessions', async (c) => {
 // Tokens
 user.get('/api/tokens', async (c) => {
     const payload = c.get('user')!
-    const tokens = await c.env.DB.prepare('SELECT id, label, created_at, token FROM tokens WHERE uid = ? ORDER BY created_at DESC').bind(payload.uid).all<Token>()
+    const tokens = await c.env.DB.prepare('SELECT id, label, created_at FROM tokens WHERE uid = ? ORDER BY created_at DESC').bind(payload.uid).all<Token>()
     return c.json({ success: true, tokens: tokens.results })
 })
 
@@ -256,14 +256,15 @@ user.post('/api/tokens', async (c) => {
     const countObj = await c.env.DB.prepare('SELECT COUNT(*) as count FROM tokens WHERE uid = ?').bind(payload.uid).first<{ count: number }>()
     if (countObj && countObj.count >= 3) return c.json({ success: false, message: 'max 3 tokens allowed' }, 400)
 
-    const rawToken = crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '')
-    const newToken = 'AT-' + rawToken.substring(0, 32)
+    const rawHex = (crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, ''))
+    const rawToken = 'AT-' + rawHex.substring(0, 32)
+    const hashedToken = await sha256(rawToken)
 
     await c.env.DB.prepare('INSERT INTO tokens (uid, token, label, created_at) VALUES (?, ?, ?, ?)')
-        .bind(payload.uid, newToken, label, Date.now())
+        .bind(payload.uid, hashedToken, label, Date.now())
         .run()
 
-    return c.json({ success: true, token: newToken })
+    return c.json({ success: true, token: rawToken })
 })
 
 user.delete('/api/tokens', async (c) => {

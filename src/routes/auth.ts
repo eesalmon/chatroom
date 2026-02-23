@@ -47,7 +47,8 @@ auth.post('/api/login', async (c) => {
 
         // 1. Access Token Login
         if (accessToken) {
-            const tokenRecord = await c.env.DB.prepare('SELECT id, uid FROM tokens WHERE token = ?').bind(accessToken).first<Token>()
+            const hashedToken = await sha256(accessToken)
+            const tokenRecord = await c.env.DB.prepare('SELECT id, uid FROM tokens WHERE token = ?').bind(hashedToken).first<Token>()
             if (!tokenRecord) {
                 return c.json({ success: false, message: 'invalid access token' }, 403)
             }
