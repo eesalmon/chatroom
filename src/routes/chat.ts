@@ -29,7 +29,6 @@ chat.get('/api/online-users', authMiddleware, async (c) => {
                 results.push({
                     username: u.username,
                     uid: u.uid,
-                    role: u.role,
                     channel: roomName
                 })
             })

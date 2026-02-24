@@ -4,7 +4,7 @@
 
 适用版本: coffeeroom `v1.12`
 
-基础 URL: `https://room.caffeine.ink/`
+基础 URL: `https://room.caffeine.ink`
 
 鉴权方式: `Session Cookie` (HttpOnly)
 
@@ -352,8 +352,8 @@ WebSocket: `/websocket/:room`
 {
     "sender_username": "system",
     "sender_uid": "00001",
-    "text": "message msg-1771655966375-f9ac3 (hello) from 2026-02-21T06:39:26.375Z was deleted.",
-    "timestamp": 1700000000000
+    "text": "message msg-1760000000000-abcde (hello) from 2025-10-09T08:53:20.000Z was deleted.",
+    "timestamp": 1770000000000
 }
 ```
 
