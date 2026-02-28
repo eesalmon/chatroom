@@ -62,6 +62,8 @@ WebSocket: `/websocket/:room`
 
 鉴权: 无 (公开)
 
+请求类型: `application/x-www-form-urlencoded` 或 `multipart/form-data`
+
 参数:
 - username: `string`, e.g. `"flat_white"`
 - access_token: `string`, e.g. `"AT-e0e081aea4714b139526b28f629faeab"`
