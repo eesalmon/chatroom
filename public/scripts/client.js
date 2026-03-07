@@ -492,9 +492,6 @@ chatForm.addEventListener('submit', async (e) => {
         return;
     }
 
-    // 乐观 UI
-    addMessage(currentUser, text, "sent", Date.now());
-
     // 发送给服务器
     if (currentSocket.readyState === WebSocket.OPEN) {
         currentSocket.send(text);
@@ -659,7 +656,7 @@ function addMessage(sender, text, type, timestamp = Date.now(), msgId = null, me
         
         chatWindow.appendChild(div);
         
-        if (type === "sent" || isNearBottom) {
+        if (isNearBottom || sender === currentUser) {
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
     }

@@ -356,7 +356,7 @@ export class ChatRoom extends DurableObject {
             const messageString = JSON.stringify(messageObj)
 
             await this.saveMessage(messageObj)
-            this.broadcast(messageString, socket)
+            this.broadcast(messageString)
 
             // bridge logic: forward to minecraft server via http bridge
             if (roomName === "minecraft" && socket.userData.username !== "console" && this.env.BRIDGE_URL) {
@@ -504,9 +504,9 @@ export class ChatRoom extends DurableObject {
         }
     }
 
-    broadcast(message: string, senderSocket?: any) {
+    broadcast(message: string) {
         this.sessions.forEach(session => {
-            if (session.readyState === WebSocket.READY_STATE_OPEN && session !== senderSocket) {
+            if (session.readyState === WebSocket.READY_STATE_OPEN) {
                 try {
                     session.send(message)
                 } catch (err) {
