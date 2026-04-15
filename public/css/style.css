@@ -26,7 +26,7 @@
 }
 
 #chat-window {
-	height: 200px;
+	height: 410px;
 	width: clamp(200px, 100%, 405px);
 	margin-bottom: 3px;
 	background-color: var(--chat-bg-color);
@@ -42,7 +42,7 @@
 }
 
 #room-list {
-    height: 224px;
+    height: 434px;
     width: 105px;
     min-width: 105px;
     background-color: var(--chat-bg-color);
@@ -103,6 +103,12 @@
     border: 1px solid var(--border-color);
 }
 
+.channel-menu .menu-item:hover,
+.channel-menu .menu-item:active,
+.channel-menu .menu-item.active {
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+}
 
 .message {
     margin-bottom: 5px;
@@ -180,18 +186,35 @@ input:focus {
     user-select: none;
 }
 
+.menu-row {
+    display: flex;
+    gap: 3px;
+    margin-top: 27px;
+    margin-bottom: 3px;
+    width: clamp(305px, 100%, 513px);
+    box-sizing: border-box;
+}
+
 .mainMenu {
     background-color: var(--chat-bg-color);
     border: 1px solid var(--border-color);
     border-radius: 3px;
     height: 25px;
     gap: 5px;
-    width: clamp(305px, 100%, 513px);
     box-sizing: border-box;
-    margin-top: 27px;
-    margin-bottom: 3px;
     padding: 0 10px 0 10px;
     display: flex;
+    align-items: center;
+}
+
+.channel-menu {
+    flex-shrink: 0;
+    padding: 0 5px;
+}
+
+.status-menu {
+    flex: 1;
+    min-width: 0;
 }
 
 .right-menu {
@@ -234,6 +257,11 @@ input:focus {
     min-width: 120px;
     max-height: 300px;
     overflow-y: auto;
+}
+
+.channel-menu .user-list-popup {
+    right: auto;
+    left: 0;
 }
 
 .user-list-popup.show {

@@ -88,23 +88,46 @@ async function init() {
     // 绑定 popup 点击事件
     const onlineBtn = document.getElementById('online-users');
     const onlinePopup = document.getElementById('online-users-popup');
+    const channelBtn = document.getElementById('channel-menu-btn');
+    const channelPopup = document.getElementById('channel-popup');
     
     if (onlineBtn && onlinePopup) {
         onlineBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isShowing = onlinePopup.classList.toggle('show');
-            // 高亮状态
             onlineBtn.classList.toggle('active', isShowing);
+            // 关闭另一个 popup
+            if (channelPopup) {
+                channelPopup.classList.remove('show');
+                channelBtn.classList.remove('active');
+            }
         });
+    }
 
-        // 点击外部关闭
-        document.addEventListener('click', (e) => {
-            if (!onlineBtn.contains(e.target) && !onlinePopup.contains(e.target)) {
+    if (channelBtn) {
+        channelBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (roomList) {
+                roomList.classList.toggle('show');
+            }
+            // 关闭 online popup
+            if (onlinePopup) {
                 onlinePopup.classList.remove('show');
                 onlineBtn.classList.remove('active');
             }
         });
     }
+
+    // 点击外部关闭
+    document.addEventListener('click', (e) => {
+        if (onlineBtn && onlinePopup && !onlineBtn.contains(e.target) && !onlinePopup.contains(e.target)) {
+            onlinePopup.classList.remove('show');
+            onlineBtn.classList.remove('active');
+        }
+        if (roomList && roomList.classList.contains('show') && !roomList.contains(e.target) && channelBtn && !channelBtn.contains(e.target)) {
+            roomList.classList.remove('show');
+        }
+    });
 }
 
 // 函数: 加载历史记录
@@ -271,6 +294,11 @@ function joinRoom(roomName) {
   oldestMsgId = null; // 重置分页 cursor
   isLoadingHistory = false;
   updateActiveRoomUI(roomName);
+
+  const channelBtn = document.getElementById('channel-menu-btn');
+  if (channelBtn) {
+    channelBtn.textContent = roomName;
+  }
 
   messageInput.placeholder = ROOM_PLACEHOLDERS[roomName] || "input...";
   

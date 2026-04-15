@@ -43,12 +43,19 @@
               theme: <a href="#" id="darkModeButton">auto</a>
             </span>
           </div>
-          <div class="mainMenu">
-            <span id="status" class="connection-status">connecting...</span><div class="menu-item" id="retryButton">retry</div><div class="menu-item" id="reloadButton">reload</div>
-            <div class="right-menu">
+          <div class="menu-row">
+            <div class="mainMenu channel-menu">
               <div class="menu-wrapper">
-                <div id="online-users" class="menu-item"><span style="color: var(--border-color);">*</span></div>
-                <div id="online-users-popup" class="user-list-popup"></div>
+                <div id="channel-menu-btn" class="menu-item">loading...</div>
+              </div>
+            </div>
+            <div class="mainMenu status-menu">
+              <span id="status" class="connection-status">connecting...</span><div class="menu-item" id="retryButton">retry</div><div class="menu-item" id="reloadButton">reload</div>
+              <div class="right-menu">
+                <div class="menu-wrapper">
+                  <div id="online-users" class="menu-item"><span style="color: var(--border-color);">*</span></div>
+                  <div id="online-users-popup" class="user-list-popup"></div>
+                </div>
               </div>
             </div>
           </div>
