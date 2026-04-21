@@ -12,21 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const msgBox = document.getElementById('auth-message');
 
     // 接管浏览器原生验证提示
-    form.querySelectorAll('input').forEach(input => {
-        input.addEventListener('invalid', function(e) {
-            e.preventDefault();
-            const oldTip = this.parentNode.querySelector('.error-tip');
-            if (oldTip) oldTip.remove();
+    if (window.setupFormValidation) {
+        window.setupFormValidation(form);
+    }
 
-            const tip = document.createElement('div');
-            tip.className = 'error-tip';
-            tip.innerText = this.validationMessage;
-            this.parentNode.appendChild(tip);
-            setTimeout(() => { tip.remove(); }, 2000);
-        });
-    });
-
-    // 表单提交
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         msgBox.style.display = 'none';

@@ -15,20 +15,7 @@ async function loadUserInfo() {
 const form = document.getElementById('change-password-form');
 
 // 接管浏览器原生验证提示
-form.querySelectorAll('input').forEach(input => {
-    input.addEventListener('invalid', function(e) {
-        e.preventDefault();
-        // 移除旧提示
-        const oldTip = this.parentNode.querySelector('.error-tip');
-        if (oldTip) oldTip.remove();
-
-        const tip = document.createElement('div');
-        tip.className = 'error-tip';
-        tip.innerText = this.validationMessage;
-        this.parentNode.appendChild(tip);
-        setTimeout(() => { tip.remove(); }, 2000);
-    });
-});
+if (window.setupFormValidation) window.setupFormValidation(form);
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();

@@ -51,16 +51,9 @@ function formatDate(timestamp) {
         userDisplay.innerText = "error loading profile";
     }
 
-    createForm.querySelectorAll('input').forEach(input => {
-        input.addEventListener('invalid', function(e) {
-            e.preventDefault();
-            const tip = document.createElement('div');
-            tip.className = 'error-tip';
-            tip.innerText = this.validationMessage;
-            this.parentNode.appendChild(tip);
-            setTimeout(() => { tip.remove(); }, 2000);
-        });
-    });
+    if (window.setupFormValidation) {
+        window.setupFormValidation(createForm);
+    }
 
     // 2. Load OATs
     async function loadOats() {

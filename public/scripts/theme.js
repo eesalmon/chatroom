@@ -107,4 +107,27 @@
         }
     }
 
+    // 4. 全局工具函数
+    
+    window.showErrorTip = function(element, message, duration = 2000) {
+        const oldTip = element.parentNode.querySelector('.error-tip');
+        if (oldTip) oldTip.remove();
+
+        const tip = document.createElement('div');
+        tip.className = 'error-tip';
+        tip.innerText = message;
+        element.parentNode.appendChild(tip);
+        setTimeout(() => { tip.remove(); }, duration);
+    };
+
+    window.setupFormValidation = function(form) {
+        if (!form) return;
+        form.querySelectorAll('input').forEach(input => {
+            input.addEventListener('invalid', function(e) {
+                e.preventDefault();
+                window.showErrorTip(this, this.validationMessage);
+            });
+        });
+    };
+
 })();

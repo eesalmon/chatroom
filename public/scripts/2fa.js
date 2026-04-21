@@ -18,20 +18,7 @@ async function init2FA() {
     }
 
     function setupFormValidation(form) {
-        if (!form) return;
-        form.querySelectorAll('input').forEach(input => {
-            input.addEventListener('invalid', function(e) {
-                e.preventDefault();
-                const oldTip = this.parentNode.querySelector('.error-tip');
-                if (oldTip) oldTip.remove();
-
-                const tip = document.createElement('div');
-                tip.className = 'error-tip';
-                tip.innerText = this.validationMessage;
-                this.parentNode.appendChild(tip);
-                setTimeout(() => { tip.remove(); }, 3000);
-            });
-        });
+        if (window.setupFormValidation) window.setupFormValidation(form);
     }
 
     setupFormValidation(document.getElementById('verify-2fa-form'));

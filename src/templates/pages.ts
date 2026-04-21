@@ -484,19 +484,9 @@ export const getResetPasswordFormHtml = (token: string, is2FAEnabled: boolean) =
         const form = document.getElementById('reset-password-form');
         const msgBox = document.getElementById('auth-message');
 
-        form.querySelectorAll('input').forEach(input => {
-            input.addEventListener('invalid', function(e) {
-                e.preventDefault();
-                const oldTip = this.parentNode.querySelector('.error-tip');
-                if (oldTip) oldTip.remove();
-
-                const tip = document.createElement('div');
-                tip.className = 'error-tip';
-                tip.innerText = this.validationMessage;
-                this.parentNode.appendChild(tip);
-                setTimeout(() => { tip.remove(); }, 2000);
-            });
-        });
+        if (window.setupFormValidation) {
+            window.setupFormValidation(form);
+        }
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
