@@ -120,7 +120,7 @@
         .card-title {
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
@@ -277,10 +277,7 @@
                 <p style="margin-top: 0px; margin-bottom: 8px;">Welcome to the proxy service.</p>
                 <p style="margin-top: 0px; margin-bottom: 8px;">Quota:</p>
                 <ul style="padding-left: 20px; margin-bottom: 0; margin-top: 0;">
-                    <li style="margin-bottom: 4px;"><b>Oregon:</b> 40 GB monthly quota.
-                        Resets on the 1st of each month.</li>
-                    <li><b>Salmon:</b> 1 GB base quota. Daily check-in grants +128 MB (valid for
-                        30 days). Check-in resets daily at 00:00 UTC.</li>
+                    <li>40 GB monthly quota. Resets on the 1st of each month.</li>
                 </ul>
                 <p>Download
                 <a href="https://room.caffeine.ink/files/download/flc.apk">FlClash for Android</a>
@@ -395,48 +392,25 @@
             }
 
             const proxy = data.my_proxy;
-            const oregonPct = Math.min(100, (proxy.static_used / proxy.static_quota) * 100);
-            const salmonPct = Math.min(100, (proxy.dynamic_used / proxy.dynamic_quota) * 100);
+            const quotaPct = Math.min(100, (proxy.static_used / proxy.static_quota) * 100);
 
             const subBase = window.location.origin + '/sub/' + proxy.sub_token;
 
             let html = '<div class="cards-container">';
 
-            // Oregon (Static)
+            // Quota (Static)
             html += `
                 <div class="inner-box">
                     <div style="display: flex; justify-content: space-between; align-items: center;
             min-height: 23px;">
-                        <div class="inner-box-title" style="margin-bottom:0;">Oregon</div>
+                        <div class="inner-box-title" style="margin-bottom:0;">Quota</div>
                     </div>
                     <div class="progress-container">
-                        <div class="progress-bar" style="width: ${oregonPct}%;"></div>
+                        <div class="progress-bar" style="width: ${quotaPct}%;"></div>
                     </div>
                     <div class="progress-text">${formatGB(proxy.static_used)} /
                                                ${formatGB(proxy.static_quota)}</div>
                     ${proxy.static_is_blocked
-                            ? '<div class="warning-text">Quota exceeded. Traffic is blocked.</div>'
-                            : ''}
-                </div>
-            `;
-
-            // Salmon (Dynamic)
-            html += `
-                <div class="inner-box">
-                    <div style="display: flex; justify-content: space-between; align-items: center;
-            min-height: 23px;">
-                        <div class="inner-box-title" style="margin-bottom:0;">Salmon</div>
-                        <button id="checkin-btn" class="btn" onclick="checkIn()"
-                        ${proxy.has_checked_in_today ? 'disabled' : ''}>
-                            ${proxy.has_checked_in_today ? 'Checked In' : 'Check In (+128 MB)'}
-                        </button>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: ${salmonPct}%;"></div>
-                    </div>
-                    <div class="progress-text">${formatGB(proxy.dynamic_used)} /
-                                               ${formatGB(proxy.dynamic_quota)}</div>
-                    ${proxy.dynamic_is_blocked
                             ? '<div class="warning-text">Quota exceeded. Traffic is blocked.</div>'
                             : ''}
                 </div>
@@ -476,16 +450,13 @@
                         <table>
                             <tr>
                                 <th>User</th>
-                                <th>Oregon</th>
-                                <th>Salmon</th>
+                                <th>Quota</th>
                             </tr>
                             ${data.all_users.map(u => `
                                 <tr>
                                     <td>${u.username}</td>
                                     <td>${formatGB(u.static_used)} /
                                         ${formatGB(u.static_quota)}</td>
-                                    <td>${formatGB(u.dynamic_used)} /
-                                        ${formatGB(u.dynamic_quota)}</td>
                                 </tr>
                             `).join('')}
                         </table>
@@ -501,14 +472,12 @@
                         <table>
                             <tr>
                                 <th>Month</th>
-                                <th>Oregon</th>
-                                <th>Salmon</th>
+                                <th>Quota</th>
                             </tr>
                             ${data.history.map(h => `
                                 <tr>
                                     <td>${h.year}-${h.month.toString().padStart(2, '0')}</td>
                                     <td>${formatGB(h.static_used)}</td>
-                                    <td>${formatGB(h.dynamic_used)}</td>
                                 </tr>
                             `).join('')}
                         </table>
