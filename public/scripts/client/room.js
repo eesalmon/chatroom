@@ -21,14 +21,13 @@ function renderRoomList() {
 
 }
 
-// EnderDragon message filter (minecraft channel only)
 const endraToggleWrap = document.getElementById('endra-toggle-wrap');
 const endraToggleButton = document.getElementById('endraToggleButton');
 let hideEndra = localStorage.getItem('hide-endra') === '1';
 
 function applyEndraState() {
-  // filter only applies while viewing the minecraft channel
-  chatWindow.classList.toggle('hide-endra', hideEndra && currentRoom === 'minecraft');
+  // applies in every channel, not just minecraft, so switching away doesn't flood the view
+  chatWindow.classList.toggle('hide-endra', hideEndra);
   if (endraToggleButton) {
     endraToggleButton.textContent = hideEndra ? 'show endra' : 'hide endra';
   }
@@ -36,9 +35,7 @@ function applyEndraState() {
 
 let isFillingEndra = false;
 
-// Hiding EnderDragon can drop the visible history below one screen, which kills the
-// scroll-to-top pagination trigger. Keep pulling older pages until there is enough
-// non-endra content to scroll, or history runs out.
+// without this, hiding enough messages leaves too little to scroll and pagination never triggers
 async function fillEndraFilteredHistory(minVisible = 15, maxPages = 10) {
   if (isFillingEndra) return;
   isFillingEndra = true;
@@ -57,7 +54,6 @@ async function fillEndraFilteredHistory(minVisible = 15, maxPages = 10) {
   }
 }
 
-// show the toggle only in the minecraft room
 function updateEndraToggle(roomName) {
   if (endraToggleWrap) {
     endraToggleWrap.style.display = roomName === 'minecraft' ? '' : 'none';
@@ -71,7 +67,7 @@ if (endraToggleButton) {
     hideEndra = !hideEndra;
     localStorage.setItem('hide-endra', hideEndra ? '1' : '0');
     applyEndraState();
-    if (hideEndra && currentRoom === 'minecraft') fillEndraFilteredHistory();
+    if (hideEndra) fillEndraFilteredHistory();
   });
 }
 
@@ -159,8 +155,7 @@ function setupSocketListeners(socket) {
         const senderName = msg.sender_username || msg.sender || "anonymous";
         addMessage(senderName, msg.text, "received", msg.timestamp, msg.msg_id, "append", msg.is_deleted, msg.is_censored, msg.is_bridged);
 
-        // covers entering minecraft with the filter already on: top up as history streams in
-        if (hideEndra && currentRoom === 'minecraft') fillEndraFilteredHistory();
+        if (hideEndra) fillEndraFilteredHistory();
     } catch (e) {
         addMessage("anonymous", event.data, "received");
     }

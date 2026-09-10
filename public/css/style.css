@@ -41,7 +41,6 @@
     font-size: 14px;
 }
 
-/* minecraft channel: EnderDragon (uid 02008) message filter, toggled via #endraToggleButton */
 #chat-window.hide-endra .message.endra-msg {
     display: none;
 }
