@@ -282,7 +282,11 @@ function addMessage(sender, text, type, timestamp = Date.now(), msgId = null, me
 
     const div = document.createElement('div');
     div.className = 'message';
-    div.style.marginBottom = "10px"; 
+    // tag EnderDragon / uid 02008 messages so #chat-window.hide-endra can filter them (minecraft channel)
+    if (sender === "EnderDragon") {
+        div.classList.add('endra-msg');
+    }
+    div.style.marginBottom = "10px";
     if (msgId) {
         div.dataset.msgId = msgId;
     }

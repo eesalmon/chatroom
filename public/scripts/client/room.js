@@ -21,6 +21,36 @@ function renderRoomList() {
 
 }
 
+// EnderDragon message filter (minecraft channel only)
+const endraToggleWrap = document.getElementById('endra-toggle-wrap');
+const endraToggleButton = document.getElementById('endraToggleButton');
+let hideEndra = localStorage.getItem('hide-endra') === '1';
+
+function applyEndraState() {
+  // filter only applies while viewing the minecraft channel
+  chatWindow.classList.toggle('hide-endra', hideEndra && currentRoom === 'minecraft');
+  if (endraToggleButton) {
+    endraToggleButton.textContent = hideEndra ? 'show endra' : 'hide endra';
+  }
+}
+
+// show the toggle only in the minecraft room
+function updateEndraToggle(roomName) {
+  if (endraToggleWrap) {
+    endraToggleWrap.style.display = roomName === 'minecraft' ? '' : 'none';
+  }
+  applyEndraState();
+}
+
+if (endraToggleButton) {
+  endraToggleButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    hideEndra = !hideEndra;
+    localStorage.setItem('hide-endra', hideEndra ? '1' : '0');
+    applyEndraState();
+  });
+}
+
 // switch active chat room
 function joinRoom(roomName) {
 
@@ -43,6 +73,8 @@ function joinRoom(roomName) {
   if (channelBtn) {
     channelBtn.textContent = roomName;
   }
+
+  updateEndraToggle(roomName);
 
   messageInput.placeholder = ROOM_PLACEHOLDERS[roomName] || "input...";
   
