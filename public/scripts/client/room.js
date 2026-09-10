@@ -34,6 +34,29 @@ function applyEndraState() {
   }
 }
 
+let isFillingEndra = false;
+
+// Hiding EnderDragon can drop the visible history below one screen, which kills the
+// scroll-to-top pagination trigger. Keep pulling older pages until there is enough
+// non-endra content to scroll, or history runs out.
+async function fillEndraFilteredHistory(minVisible = 15, maxPages = 10) {
+  if (isFillingEndra) return;
+  isFillingEndra = true;
+  try {
+    for (let i = 0; i < maxPages; i++) {
+      const visible = chatWindow.querySelectorAll('.message:not(.endra-msg)').length;
+      const scrollable = chatWindow.scrollHeight > chatWindow.clientHeight + 50;
+      if (visible >= minVisible && scrollable) return;
+      if (!oldestMsgId) return;
+      const before = oldestMsgId;
+      await loadMoreMessages();
+      if (oldestMsgId === before) return;  // no progress / end of history
+    }
+  } finally {
+    isFillingEndra = false;
+  }
+}
+
 // show the toggle only in the minecraft room
 function updateEndraToggle(roomName) {
   if (endraToggleWrap) {
@@ -48,6 +71,7 @@ if (endraToggleButton) {
     hideEndra = !hideEndra;
     localStorage.setItem('hide-endra', hideEndra ? '1' : '0');
     applyEndraState();
+    if (hideEndra && currentRoom === 'minecraft') fillEndraFilteredHistory();
   });
 }
 
@@ -134,6 +158,9 @@ function setupSocketListeners(socket) {
 
         const senderName = msg.sender_username || msg.sender || "anonymous";
         addMessage(senderName, msg.text, "received", msg.timestamp, msg.msg_id, "append", msg.is_deleted, msg.is_censored, msg.is_bridged);
+
+        // covers entering minecraft with the filter already on: top up as history streams in
+        if (hideEndra && currentRoom === 'minecraft') fillEndraFilteredHistory();
     } catch (e) {
         addMessage("anonymous", event.data, "received");
     }
